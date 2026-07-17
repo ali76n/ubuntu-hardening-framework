@@ -1,0 +1,21 @@
+---
+
+- name: Check operating system
+  ansible.builtin.include_tasks:
+    file: os.yml
+
+- name: Check system resources
+  ansible.builtin.include_tasks:
+    file: resources.yml
+
+- name: Check network
+  ansible.builtin.include_tasks:
+    file: network.yml
+
+- name: Check required packages
+  ansible.builtin.include_tasks:
+    file: packages.yml
+
+- name: Check critical services
+  ansible.builtin.include_tasks:
+    file: services.yml

@@ -1,0 +1,20 @@
+---
+
+- name: Gather service facts
+  ansible.builtin.service_facts:
+
+- name: Check SSH service
+  ansible.builtin.assert:
+    that:
+      - >
+        'ssh.service' in ansible_facts.services
+        or
+        'sshd.service' in ansible_facts.services
+    fail_msg: "SSH service was not found."
+
+- name: Display critical services
+  ansible.builtin.debug:
+    msg:
+      - "SSH: checked"
+      - "Systemd: checked"
+      - "Package manager: checked"

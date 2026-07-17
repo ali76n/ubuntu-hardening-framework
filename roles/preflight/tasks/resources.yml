@@ -1,0 +1,24 @@
+---
+
+- name: Check available memory
+  ansible.builtin.assert:
+    that:
+      - ansible_memtotal_mb >= preflight_min_memory_mb
+    fail_msg:
+      "Insufficient memory.
+      Minimum required:
+      {{ preflight_min_memory_mb }} MB"
+
+- name: Check root filesystem
+  ansible.builtin.shell:
+    cmd: |
+      df -Pm / | awk 'NR==2 {print $4}'
+  register: root_free_space
+  changed_when: false
+
+- name: Verify free disk space
+  ansible.builtin.assert:
+    that:
+      - root_free_space.stdout | int >= preflight_min_disk_free_mb
+    fail_msg:
+      "Insufficient free disk space."

@@ -1,0 +1,23 @@
+---
+
+- name: Display operating system
+  ansible.builtin.debug:
+    msg:
+      - "Distribution: {{ ansible_facts['distribution'] }}"
+      - "Version: {{ ansible_facts['distribution_version'] }}"
+      - "Kernel: {{ ansible_facts['kernel'] }}"
+      - "Architecture: {{ ansible_facts['architecture'] }}"
+
+- name: Verify Ubuntu
+  ansible.builtin.assert:
+    that:
+      - ansible_facts['distribution'] == "Ubuntu"
+    fail_msg: "Operating system is not Ubuntu."
+
+- name: Verify supported version
+  ansible.builtin.assert:
+    that:
+      - ansible_facts['distribution_version'] in supported_ubuntu_versions
+    fail_msg: >
+      Unsupported Ubuntu version:
+      {{ ansible_facts['distribution_version'] }}

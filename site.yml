@@ -1,0 +1,98 @@
+---
+- name: Ubuntu Enterprise Hardening Framework
+
+  hosts: ubuntu_servers
+
+  become: true
+
+  gather_facts: true
+
+  pre_tasks:
+
+    - name: Verify operating system
+      ansible.builtin.assert:
+        that:
+          - ansible_distribution == "Ubuntu"
+        fail_msg: "این Framework فقط برای Ubuntu طراحی شده است."
+
+    - name: Verify Ubuntu version
+      ansible.builtin.assert:
+        that:
+          - ansible_distribution_version in supported_ubuntu_versions
+        fail_msg: >
+          Ubuntu version {{ ansible_distribution_version }}
+          is not supported.
+
+  roles:
+
+    - role: preflight
+      tags:
+        - preflight
+
+    - role: common
+      tags:
+        - common
+
+    - role: ssh
+      tags:
+        - ssh
+
+    - role: firewall
+      tags:
+        - firewall
+
+    - role: fail2ban
+      tags:
+        - fail2ban
+
+    - role: auditd
+      tags:
+        - auditd
+
+    - role: sysctl
+      tags:
+        - sysctl
+
+    - role: kernel
+      tags:
+        - kernel
+
+    - role: users
+      tags:
+        - users
+
+    - role: password_policy
+      tags:
+        - password
+
+    - role: logging
+      tags:
+        - logging
+
+    - role: apparmor
+      tags:
+        - apparmor
+
+    - role: unattended_upgrades
+      tags:
+        - updates
+
+    - role: file_permissions
+      tags:
+        - permissions
+
+    - role: services
+      tags:
+        - services
+
+    - role: cron
+      tags:
+        - cron
+
+    - role: aide
+      tags:
+        - aide
+
+    - role: compliance
+      tags:
+        - compliance

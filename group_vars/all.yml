@@ -1,0 +1,92 @@
+---
+
+# =========================
+# General
+# =========================
+
+hardening_enabled: true
+
+target_os_family: Debian
+
+supported_ubuntu_versions:
+  - "22.04"
+  - "24.04"
+  - "26.04"
+
+system_timezone: UTC
+
+
+# =========================
+# SSH
+# =========================
+
+ssh_port: 22
+
+ssh_permit_root_login: "no"
+
+ssh_password_authentication: "no"
+
+ssh_pubkey_authentication: "yes"
+
+ssh_max_auth_tries: 3
+
+ssh_login_grace_time: 30
+
+ssh_client_alive_interval: 300
+
+ssh_client_alive_count_max: 2
+
+
+# =========================
+# Firewall
+# =========================
+
+ufw_enabled: true
+
+ufw_default_incoming_policy: deny
+
+ufw_default_outgoing_policy: allow
+
+ufw_allowed_tcp_ports:
+  - 22
+
+
+# =========================
+# Fail2ban
+# =========================
+
+fail2ban_enabled: true
+
+fail2ban_bantime: 3600
+
+fail2ban_findtime: 600
+
+fail2ban_maxretry: 5
+
+
+# =========================
+# IPv6
+# =========================
+
+disable_ipv6: false
+
+
+# =========================
+# Automatic Updates
+# =========================
+
+unattended_upgrades_enabled: true
+
+
+# =========================
+# AIDE
+# =========================
+
+aide_enabled: true
+
+
+# =========================
+# Auditd
+# =========================
+
+auditd_enabled: true

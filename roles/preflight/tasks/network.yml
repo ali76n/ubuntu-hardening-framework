@@ -1,0 +1,25 @@
+---
+
+- name: Check default IPv4 route
+  ansible.builtin.command:
+    cmd: ip route show default
+  register: default_route
+  changed_when: false
+  failed_when: false
+
+- name: Display default route
+  ansible.builtin.debug:
+    var: default_route.stdout
+
+- name: Check DNS resolution
+  ansible.builtin.command:
+    cmd: getent hosts archive.ubuntu.com
+  register: dns_check
+  changed_when: false
+  failed_when: false
+
+- name: Display DNS status
+  ansible.builtin.debug:
+    msg: >
+      DNS resolution status:
+      {{ 'OK' if dns_check.rc == 0 else 'FAILED' }}
